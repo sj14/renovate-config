@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "description": "Shared Renovate preset for all sj14 repositories",
+  "extends": [
+    "config:recommended",
+    "schedule:monthly",
+    "group:allNonMajor",
+    ":automergeMinor",
+    ":automergeDigest",
+    ":automergeBranch"
+  ],
+  "minimumReleaseAge": "7 days",
+  "postUpdateOptions": ["gomodTidy"],
+  "osvVulnerabilityAlerts": true,
+  "vulnerabilityAlerts": {
+    "automerge": true,
+    "automergeType": "branch"
+  }
+}
