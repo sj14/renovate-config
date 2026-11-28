@@ -6,14 +6,12 @@
     "schedule:monthly",
     "group:allNonMajor",
     ":automergeMinor",
-    ":automergeDigest",
-    ":automergeBranch"
+    ":automergeDigest"
   ],
   "minimumReleaseAge": "7 days",
   "postUpdateOptions": ["gomodTidy"],
   "osvVulnerabilityAlerts": true,
   "vulnerabilityAlerts": {
-    "automerge": true,
-    "automergeType": "branch"
+    "automerge": true
   }
 }
