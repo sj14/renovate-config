@@ -21,14 +21,12 @@ What it does:
 
 ## Branch protection
 
-Renovate pushes the update branch straight to the default branch. If the branch
-protection requires a pull request, allow the Renovate app to bypass that rule:
+Renovate pushes the update branch straight to the default branch, so the branch
+protection must not require a pull request. GitHub only lets apps bypass that rule
+in organization repositories, so remove it in personal repositories:
 
 ```sh
-gh api -X PATCH repos/OWNER/REPO/branches/main/protection/required_pull_request_reviews \
-  --input - <<'JSON'
-{"bypass_pull_request_allowances": {"apps": ["renovate"]}}
-JSON
+gh api -X DELETE repos/OWNER/REPO/branches/main/protection/required_pull_request_reviews
 ```
 
 If Renovate can't merge the branch anyway, it opens a PR instead. Renovate then
