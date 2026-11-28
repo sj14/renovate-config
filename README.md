@@ -13,19 +13,27 @@ Use it in a repository's `renovate.json`:
 
 What it does:
 
-- Monthly, all minor, patch and digest updates in one PR, merged automatically once all checks are green.
+- Monthly, all minor, patch and digest updates in one branch, merged straight into the default branch once all checks are green (no PR, so no notifications).
 - Releases are only picked up once they are 7 days old.
 - Major updates open a regular PR and are not merged automatically.
 - Vulnerability fixes skip the schedule and are merged automatically too.
 - Runs `go mod tidy` after Go updates.
 
-## Automerge waits for CI
+## Branch protection
 
-Renovate merges the PRs itself (`platformAutomerge: false`) instead of handing them
-to GitHub's auto-merge. Renovate only merges when all checks on the PR are green, so
-no required status checks are needed in the branch protection. GitHub's auto-merge
-would only wait for required checks and merge right away without them. The PR is
-merged on the next Renovate run after CI has passed.
+Renovate pushes the update branch straight to the default branch. If the branch
+protection requires a pull request, allow the Renovate app to bypass that rule:
+
+```sh
+gh api -X PATCH repos/OWNER/REPO/branches/main/protection/required_pull_request_reviews \
+  --input - <<'JSON'
+{"bypass_pull_request_allowances": {"apps": ["renovate"]}}
+JSON
+```
+
+If Renovate can't merge the branch anyway, it opens a PR instead. Renovate then
+merges that PR itself (`platformAutomerge: false`) and waits for all checks on it,
+not only for required status checks as GitHub's auto-merge would.
 
 ## Repositories without CI
 
