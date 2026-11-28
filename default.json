@@ -8,6 +8,7 @@
     ":automergeMinor",
     ":automergeDigest"
   ],
+  "platformAutomerge": false,
   "minimumReleaseAge": "7 days",
   "postUpdateOptions": ["gomodTidy"],
   "osvVulnerabilityAlerts": true,
